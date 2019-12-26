@@ -33,7 +33,8 @@ public class MarketController {
     private OrderService orderService;
     private Cart cart;
 
-    public MarketController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, Cart cart) {
+    public MarketController(ProductService productService, CategoryService categoryService,
+                            UserService userService, OrderService orderService, Cart cart) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
@@ -100,11 +101,25 @@ public class MarketController {
         return "cart_page";
     }
 
-    @GetMapping("/orders/create")
+    @GetMapping("/orders/confirm")
+    public String confirmOrder(Model model, Principal principal) {
+        model.addAttribute("customer", userService.findByPhone(principal.getName()));
+        model.addAttribute("cart", cart);
+        return "confirm_order";
+    }
+
+    @PostMapping("/orders/create")
     public String createOrder(Principal principal) {
         User user = userService.findByPhone(principal.getName());
         Order order = new Order(user, cart);
         orderService.save(order);
+        cart.clear();
+        return "redirect:/";
+    }
+
+    @GetMapping("/orders/clear")
+    public String clearCart() {
+        cart.clear();
         return "redirect:/";
     }
 }
