@@ -53,4 +53,8 @@ public class UserService implements UserDetailsService {
     public boolean isUserExist(String phone) {
         return userRepository.existsByPhone(phone);
     }
+
+    public void createUser(User newUser) {
+        userRepository.save(newUser);
+    }
 }

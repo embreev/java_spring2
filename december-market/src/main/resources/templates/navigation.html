@@ -20,7 +20,7 @@
                     <a class="nav-link" th:href="@{/}" th:text="#{nav.home}"></a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${activeTab == 'Profile' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{/profile}" th:text="#{nav.profile}"></a>
+                    <a class="nav-link" th:href="@{/user/profile}" th:text="#{nav.profile}"></a>
                 </li>
                 <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{/cart}" th:text="#{nav.cart}"></a>
@@ -33,15 +33,19 @@
                 </li>
 
                 <li sec:authorize="isAnonymous()" class="nav-item">
-                    <form class="align-middle" th:action="@{/authenticateTheUser}" method="POST">
+                    <form class="align-middle" th:action="@{/user/authUser}" method="POST">
                         <div class="input-group-prepend">
                             <input id="navLoginField" class="form-control" type="text" th:placeholder="#{nav.login.field}" name="username"
                                    aria-describedby="inputGroup-sizing-sm"style="margin-left: 10px;">
                             <input id="navPasswordField" class="form-control" type="password" th:placeholder="#{nav.password}" name="password"
                                    aria-describedby="inputGroup-sizing-sm" style="margin-left: 10px;">
-                            <button id="navLoginSubmit" class="btn btn-outline-warning btn-sm" style="margin-left: 10px;" type="submit" th:text="#{nav.login.submit}"></button>
+                            <button id="navLoginSubmit" class="btn btn-outline-warning" style="margin-left: 10px;" type="submit" th:text="#{nav.login.submit}"></button>
                         </div>
                     </form>
+                </li>
+
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a th:href="@{/user/register}" th:text="#{nav.register}" class="btn btn-outline-warning" style="margin-left: 10px;"></a>
                 </li>
 
                 <div class="dropdown" style="margin-left: 10px;">

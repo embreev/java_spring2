@@ -40,21 +40,6 @@ public class MarketController {
         this.cart = cart;
     }
 
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login_page";
-    }
-
-    @GetMapping("/profile")
-    public String profilePage(Model model, Principal principal) {
-        if (principal == null) {
-            return "redirect:/";
-        }
-        User user = userService.findByPhone(principal.getName());
-        model.addAttribute("user", user);
-        return "profile";
-    }
-
     @GetMapping("/")
     public String index(Model model, @RequestParam Map<String, String> params) {
         int pageIndex = 0;
