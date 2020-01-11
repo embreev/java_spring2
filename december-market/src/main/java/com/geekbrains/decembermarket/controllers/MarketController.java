@@ -8,7 +8,7 @@ import com.geekbrains.decembermarket.services.CategoryService;
 import com.geekbrains.decembermarket.services.OrderService;
 import com.geekbrains.decembermarket.services.ProductService;
 import com.geekbrains.decembermarket.services.UserService;
-import com.geekbrains.decembermarket.utils.Cart;
+import com.geekbrains.decembermarket.beans.Cart;
 import com.geekbrains.decembermarket.utils.ProductFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
@@ -33,8 +32,7 @@ public class MarketController {
     private OrderService orderService;
     private Cart cart;
 
-    public MarketController(ProductService productService, CategoryService categoryService,
-                            UserService userService, OrderService orderService, Cart cart) {
+    public MarketController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, Cart cart) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
@@ -86,40 +84,6 @@ public class MarketController {
     @PostMapping("/edit")
     public String saveProduct(@ModelAttribute(name = "product") Product product) {
         productService.save(product);
-        return "redirect:/";
-    }
-
-    @GetMapping("/cart/add/{id}")
-    public void addProductToCart(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        cart.add(productService.findById(id));
-        response.sendRedirect(request.getHeader("referer"));
-    }
-
-    @GetMapping("/cart")
-    public String showCart(Model model) {
-        model.addAttribute("cart", cart);
-        return "cart_page";
-    }
-
-    @GetMapping("/orders/confirm")
-    public String confirmOrder(Model model, Principal principal) {
-        model.addAttribute("customer", userService.findByPhone(principal.getName()));
-        model.addAttribute("cart", cart);
-        return "confirm_order";
-    }
-
-    @PostMapping("/orders/create")
-    public String createOrder(Principal principal) {
-        User user = userService.findByPhone(principal.getName());
-        Order order = new Order(user, cart);
-        orderService.save(order);
-        cart.clear();
-        return "redirect:/";
-    }
-
-    @GetMapping("/orders/clear")
-    public String clearCart() {
-        cart.clear();
         return "redirect:/";
     }
 }
