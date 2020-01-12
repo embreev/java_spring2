@@ -5,6 +5,7 @@ import com.geekbrains.decembermarket.entites.Order;
 import com.geekbrains.decembermarket.entites.User;
 import com.geekbrains.decembermarket.services.OrderService;
 import com.geekbrains.decembermarket.services.UserService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,27 @@ public class OrderController {
         model.addAttribute("cart", cart);
         model.addAttribute("def_phone", user.getPhone());
         return "order_info_before_confirmation";
+    }
+
+    @GetMapping("/fast/info")
+    public String showFastOrderInfo(Model model) {
+        model.addAttribute("cart", cart);
+        return "fast_order_info_before_confirmation";
+    }
+
+    @PostMapping("/fast/create")
+    public String createFastOrder(Model model, @RequestParam(name = "phone") String phone) {
+        User fastUser;
+        if (!userService.isUserExist(phone)) {
+            fastUser = new User(phone);
+            userService.createUser(fastUser);
+        } else {
+            fastUser = userService.findByPhone(phone);
+        }
+        Order fastOrder = new Order(fastUser, cart, "", phone);
+        fastOrder = orderService.save(fastOrder);
+        model.addAttribute("order_id_str", String.format("%05d", fastOrder.getId()));
+        return "order_confirmation";
     }
 
     @PostMapping("/create")

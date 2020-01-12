@@ -54,7 +54,21 @@ public class UserService implements UserDetailsService {
         return userRepository.existsByPhone(phone);
     }
 
+    public boolean isFastUser(String phone) {
+        return userRepository.findOneByPhone(phone).getIs_fast() == 1 ? true : false;
+    }
+
     public void createUser(User newUser) {
         userRepository.save(newUser);
+    }
+
+    public void updateUser(User newUser) {
+        User user = userRepository.findOneByPhone(newUser.getPhone());
+        user.setPassword(newUser.getPassword());
+        user.setFirstName(newUser.getFirstName());
+        user.setLastName(newUser.getLastName());
+        user.setEmail(newUser.getEmail());
+        user.setIs_fast(0);
+        userRepository.save(user);
     }
 }

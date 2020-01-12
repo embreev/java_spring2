@@ -1,11 +1,23 @@
 drop table if exists categories cascade;
-create table categories (id bigserial, title varchar(255), primary key(id));
+create table categories (
+  id bigserial,
+  title varchar(255),
+  primary key(id)
+);
 insert into categories
 (title) values
 ('FOOD'), ('DEVICES');
 
 drop table if exists products cascade;
-create table products (id bigserial, title varchar(255), category_id bigint, description varchar(5000), price numeric(8, 2), primary key(id), constraint fk_cat_id foreign key (category_id) references categories (id));
+create table products (
+  id bigserial,
+  title varchar(255),
+  category_id bigint,
+  description varchar(5000),
+  price numeric(8, 2),
+  primary key(id),
+  constraint fk_cat_id foreign key (category_id) references categories (id)
+);
 insert into products
 (title, category_id, description, price) values
 ('Milk', 1, 'Fresh Milk', 80.0),
@@ -20,6 +32,7 @@ CREATE TABLE users (
   email                 VARCHAR(50) UNIQUE,
   first_name            VARCHAR(50),
   last_name             VARCHAR(50),
+  is_fast               INT,
   PRIMARY KEY (id)
 );
 
@@ -45,9 +58,9 @@ INSERT INTO roles (name)
 VALUES
 ('ROLE_CUSTOMER'), ('ROLE_MANAGER'), ('ROLE_ADMIN');
 
-INSERT INTO users (phone, password, first_name, last_name, email)
+INSERT INTO users (phone, password, first_name, last_name, email, is_fast)
 VALUES
-('11111111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Admin','Admin','admin@gmail.com');
+('11111111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Admin','Admin','admin@gmail.com', 0);
 
 INSERT INTO users_roles (user_id, role_id)
 VALUES

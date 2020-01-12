@@ -48,12 +48,20 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public String addProductToCart(@ModelAttribute(name="user") User user){
+    public String createUser(@ModelAttribute(name="user") User user){
+        System.out.println(user);
         if (!userService.isUserExist(user.getPhone())) {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+            user.setIs_fast(0);
             userService.createUser(user);
 //            userService.setRoleRepository();
             return "redirect:/user/profile";
+        } else {
+            if (userService.isFastUser(user.getPhone())) {
+                user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+                userService.updateUser(user);
+                return "redirect:/user/profile";
+            }
         }
         return "redirect:/";
     }
