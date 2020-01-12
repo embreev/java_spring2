@@ -19,6 +19,36 @@
 
     <h5 th:text="'Name: ' + ${user.firstName} + ' ' + ${user.lastName}" />
     <h5 th:text="'Phone: ' + ${user.phone}" />
+    <h5 th:text="'Email: ' + ${user.email}" />
+
+    <br>
+
+    <h1>История заказов</h1>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Сумма</th>
+            <th>Товары</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"/>
+            <td th:text="${order.price}"/>
+            <td>
+                <table style="border: 0;">
+                    <tr th:each="item : ${order.items}">
+                        <td th:text="${item.product.title}">
+                        <td th:text="${item.quantity}">
+                        <td th:text="${item.price}">
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
 </div>
 
 </body>

@@ -1,6 +1,8 @@
 package com.geekbrains.decembermarket.controllers;
 
+import com.geekbrains.decembermarket.entites.Order;
 import com.geekbrains.decembermarket.entites.User;
+import com.geekbrains.decembermarket.services.OrderService;
 import com.geekbrains.decembermarket.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,15 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
     private UserService userService;
+    private OrderService orderService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @GetMapping("/login")
@@ -31,7 +36,9 @@ public class UserController {
             return "redirect:/";
         }
         User user = userService.findByPhone(principal.getName());
+        List<Order> orders = orderService.getOrders(user.getId());
         model.addAttribute("user", user);
+        model.addAttribute("orders", orders);
         return "profile";
     }
 
