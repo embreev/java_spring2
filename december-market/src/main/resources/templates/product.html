@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>December Market</title>
+    <link rel="stylesheet" th:href="@{../static/css/stylesheet.css}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Home)}" />
+
+    <h1>December Market</h1>
+
+    <h3 th:text="${product.title}"></h3>
+
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Описание товара</th>
+            <th>Категория</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${product.id}"/>
+            <td>
+                <span style="font-weight: bold" th:text="${product.title}"/>
+                <br>
+                <span th:text="${product.description}"/>
+            </td>
+            <td th:text="${product.category.title}"/>
+            <td th:text="${product.price}"/>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
