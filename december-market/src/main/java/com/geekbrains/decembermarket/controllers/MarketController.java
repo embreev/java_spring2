@@ -1,9 +1,7 @@
 package com.geekbrains.decembermarket.controllers;
 
 import com.geekbrains.decembermarket.entites.Category;
-import com.geekbrains.decembermarket.entites.Order;
 import com.geekbrains.decembermarket.entites.Product;
-import com.geekbrains.decembermarket.entites.User;
 import com.geekbrains.decembermarket.services.CategoryService;
 import com.geekbrains.decembermarket.services.OrderService;
 import com.geekbrains.decembermarket.services.ProductService;
@@ -17,10 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +31,7 @@ public class MarketController {
     private UserService userService;
     private OrderService orderService;
     private Cart cart;
+    public static int count = 1;
 
     public MarketController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, Cart cart) {
         this.productService = productService;
@@ -55,6 +56,18 @@ public class MarketController {
         model.addAttribute("categories", categories);
         model.addAttribute("page", page);
         return "index";
+    }
+
+    @GetMapping("/view/{id}")
+    public String ViewProduct(Model model, @PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
+        System.out.println(request.getCookies()[0].getName());
+
+//            Cookie cookie = new Cookie("marketProduct", product.getTitle() + ": " + count++);
+//            cookie.setMaxAge(5);
+//            response.addCookie(cookie);
+        return "product";
     }
 
     @GetMapping("/edit/{id}")

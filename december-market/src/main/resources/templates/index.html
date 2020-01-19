@@ -55,6 +55,7 @@
             </td>
             <td th:text="${product.price}"/>
             <td>
+                <a th:href="@{'/view/' + ${product.id}}" class="btn btn-warning" target="_blank">View</a>
                 <a th:href="@{'/edit/' + ${product.id}}" class="btn btn-warning">Edit</a>
                 <a th:href="@{'/cart/add/' + ${product.id}}" class="btn btn-primary">Add to Cart</a>
             </td>
