@@ -32,3 +32,4 @@ build/
 /questions.txt
 /.idea/
 /.idea/
+/.mvn/
