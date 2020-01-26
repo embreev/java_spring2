@@ -23,7 +23,7 @@ public class CatalogEndpoint {
     @ResponsePayload
     public GetProductsListResponse getProductsListResponse(@RequestPayload GetProductsListRequest request) {
         GetProductsListResponse response = new GetProductsListResponse();
-        response.setClientName(request.getName() + " " + request.getLastName());
+        response.setClientName("Hello, " + request.getName());
         response.setProductsList(soapCatalogService.getAllProductsList());
         return response;
     }
