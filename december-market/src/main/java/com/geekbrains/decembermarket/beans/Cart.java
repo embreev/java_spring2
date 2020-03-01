@@ -59,4 +59,8 @@ public class Cart {
             price = price.add(i.getPrice());
         }
     }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
 }

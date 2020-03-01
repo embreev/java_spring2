@@ -2,6 +2,8 @@ package com.geekbrains.decembermarket.entites;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -30,6 +32,7 @@ public class Product {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<Review> reviews;
+
 }
