@@ -29,7 +29,3 @@ build/
 
 ### VS Code ###
 .vscode/
-/questions.txt
-/.idea/
-/.idea/
-/.mvn/

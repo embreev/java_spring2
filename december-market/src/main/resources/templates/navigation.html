@@ -28,6 +28,7 @@
                 <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${activeTab == 'History' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{/orders/history}" th:text="#{nav.orders.history}"></a>
                 </li>
+
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <form th:action="@{/logout}" method="POST">
                         <button id="navLogout" class="btn btn-outline-secondary" type="submit"  th:text="#{nav.logout}"></button>

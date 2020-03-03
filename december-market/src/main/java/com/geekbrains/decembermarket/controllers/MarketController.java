@@ -34,15 +34,11 @@ public class MarketController {
     private ProductService productService;
     private CategoryService categoryService;
     private UserService userService;
-    private OrderService orderService;
-    private Cart cart;
 
-    public MarketController(ProductService productService, CategoryService categoryService, UserService userService, OrderService orderService, Cart cart) {
+    public MarketController(ProductService productService, CategoryService categoryService, UserService userService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.userService = userService;
-        this.orderService = orderService;
-        this.cart = cart;
     }
 
     @GetMapping("/login")

@@ -5,6 +5,8 @@ import com.geekbrains.decembermarket.entites.Order;
 import com.geekbrains.decembermarket.entites.User;
 import com.geekbrains.decembermarket.services.OrderService;
 import com.geekbrains.decembermarket.services.UserService;
+import com.geekbrains.decembermarket.utils.PdfCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,14 @@ public class OrderController {
     private UserService userService;
     private OrderService orderService;
     private Cart cart;
+    private PdfCreator pdfCreator;
 
-    public OrderController(UserService userService, OrderService orderService, Cart cart) {
+    @Autowired
+    public OrderController(UserService userService, OrderService orderService, Cart cart, PdfCreator pdfCreator) {
         this.userService = userService;
         this.orderService = orderService;
         this.cart = cart;
+        this.pdfCreator = pdfCreator;
     }
 
     @GetMapping("/info")
@@ -47,7 +52,9 @@ public class OrderController {
         }
         Order order = new Order(user, cart, address, phone);
         order = orderService.save(order);
+        pdfCreator.createPdfOrder(order);
         model.addAttribute("order_id_str", String.format("%05d", order.getId()));
+        model.addAttribute("order_id", order.getId());
         return "order_confirmation";
     }
 
