@@ -16,8 +16,8 @@
     <div th:replace="~{navigation :: navigation(Home)}" />
 
     <h1 th:text="'Ваш заказ #' + ${order_id_str} + ' сформирован'"></h1>
-    <p>Благодарим за покупку!</p>
-    <a th:href="@{/}">Вернуться на главную страницу</a>
+
+    <a th:href="@{'/paypal/buy/' + ${order_id}}">Оплатить</a>
 </div>
 
 </body>
